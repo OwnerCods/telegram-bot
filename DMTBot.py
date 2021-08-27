@@ -4,6 +4,7 @@ import telebot
 from telebot.types import Message, ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton
 
 BOT_TOKEN = os.environ['TOKEN']
+print(BOT_TOKEN)
 bot = telebot.TeleBot(BOT_TOKEN)
 
 class Wallet:  
