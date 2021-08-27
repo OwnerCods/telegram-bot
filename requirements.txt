@@ -1,3 +1,2 @@
-os
 requests
 telebot
