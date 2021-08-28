@@ -1,2 +1,3 @@
 requests
 telebot
+telebot.types
