@@ -3,7 +3,7 @@ import requests
 import telebot
 from telebot.types import Message, ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton
 
-BOT_TOKEN = 'TOKEN'
+BOT_TOKEN = os.environ['TOKEN']
 
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -105,7 +105,7 @@ def SendWelcome(message):
 
 @bot.message_handler(commands = ['help'])
 def SendHelp(message):
-    helpMessage = '• /start - Запускает бота\n• /help - Информирует о командах\n• /getwalletbalance - Отправляет баланс кошелька\n\nЕсли есть вопросы, пиши @MyCryptoSound'
+    helpMessage = '• /start - Запускает бота\n• /help - Информирует о командах\n• /getwalletbalance - Отправляет баланс кошелька\n\nЕсли есть вопросы, пиши @inDaBots'
     bot.send_message(message.chat.id, helpMessage)
 
 @bot.message_handler(commands = ['getwalletbalance'])
