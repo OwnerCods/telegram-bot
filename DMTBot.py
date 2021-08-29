@@ -99,10 +99,10 @@ def GetDmtInformation(walletAddress):
     return requests.get(f'https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress={dmtTokenAddress}&address={walletAddress}&tag=latest')
 
 def GetBnbInformation(walletAddress):
-    return requests.get(f'https://api.bscscan.com/api?module=account&action=balancemulti&address={walletAddress}&tag=latest')
+    return requests.get(f'https://api.bscscan.com/api?module=account&action=balance&address={walletAddress}&tag=latest')
 
 def GetBnbtestInformation(walletAddress):
-       return requests.get(f'https://api.bscscan.com/api?module=account&action=balancemulti&address={walletAddress}&tag=latest')
+    return requests.get(f'https://api.bscscan.com/api?module=account&action=balancemulti&address={walletAddress}&tag=latest')
 
 
 def GetEthInformation(walletAddress):
