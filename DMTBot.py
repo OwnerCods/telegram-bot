@@ -102,7 +102,9 @@ def GetBnbInformation(walletAddress):
     return requests.get(f'https://api.bscscan.com/api?module=account&action=balancemulti&address={walletAddress}&tag=latest')
 
 def GetBnbtestInformation(walletAddress):
-    return requests.get(f'https://api.bscscan.com/api?module=account&action=balance&address={walletAddress}&tag=latest')
+     usdTokenAddress = '0xdac17f958d2ee523a2206206994597c13d831ec7'
+    return requests.get(f'https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress={usdTokenAddress}&address={walletAddress}&tag=latest')
+
 
 def GetEthInformation(walletAddress):
     return requests.get(f'https://api.etherscan.io/api?module=account&action=balance&address={walletAddress}&tag=latest')
