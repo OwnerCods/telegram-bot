@@ -148,7 +148,7 @@ def SendWalletBalance(message):
 
 def SetNameOfCurrency(message):
     currency = str(message.text)
-    if (currency != 'DMT' currency != 'AIR' and currency != 'ETH' and currency != 'BTC' and currency != 'BNB' and currency != 'BNBtest'):
+    if (currency != 'DMT' and currency != 'AIR' and currency != 'ETH' and currency != 'BTC' and currency != 'BNB' and currency != 'BNBtest'):
         bot.send_message(message.chat.id, 'Такой валюты у нас нет', reply_markup = ReplyKeyboardRemove())
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIJcV6Wrw3fxfGMo_gIyRcUnxMpQlocAAI4AANVLHgLguRsLYTyaJYYBA')
     else:
