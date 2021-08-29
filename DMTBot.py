@@ -106,7 +106,7 @@ def GetDmtInformation(walletAddress):
     return requests.get(f'https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress={dmtTokenAddress}&address={walletAddress}&tag=latest')
 
 def GetUsdtbnbInformation(walletAddress):
-    usdbnbTokenAddress = '0xf3372c192f5799e3308fa9cc1c5200390edd34cd'
+    usdbnbTokenAddress = '0x55d398326f99059ff775485246999027b3197955'
     return requests.get(f'https://api.bscscan.com/api?module=account&action=tokenbalance&contractaddress={usdbnbTokenAddress}&address={walletAddress}&tag=latest')
 
 def GetBnbInformation(walletAddress):
@@ -145,14 +145,14 @@ def SendWalletBalance(message):
     btcButton = KeyboardButton(text = 'BTC')
     bnbButton = KeyboardButton(text = 'BNB')
     erc20Button = KeyboardButton(text = 'Tether (ERC20)')
-    bip20Button = KeyboardButton(text = 'Tether (BIP20)')
-    keyboard.add(dmtButton, ethButton, btcButton, bnbButton, erc20Button, bip20Button)
+    bep20Button = KeyboardButton(text = 'Tether (BEP20)')
+    keyboard.add(dmtButton, ethButton, btcButton, bnbButton, erc20Button, bep20Button)
     bot.send_message(message.chat.id, 'Пожалуйста, выберите валюту', reply_markup = keyboard)
     bot.register_next_step_handler(message, SetNameOfCurrency)
 
 def SetNameOfCurrency(message):
     currency = str(message.text)
-    if (currency != 'DMT' and currency != 'ETH' and currency != 'BTC' and currency != 'BNB' and currency != 'Tether (ERC20)' and currency != 'Tether (BIP20)'):
+    if (currency != 'DMT' and currency != 'ETH' and currency != 'BTC' and currency != 'BNB' and currency != 'Tether (ERC20)' and currency != 'Tether (BEP20)'):
         bot.send_message(message.chat.id, 'Такой валюты у нас нет', reply_markup = ReplyKeyboardRemove())
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIJcV6Wrw3fxfGMo_gIyRcUnxMpQlocAAI4AANVLHgLguRsLYTyaJYYBA')
     else:
@@ -189,7 +189,7 @@ def SetWalletBalance(message):
         if (OurWallet.Status == '1'):
             OurWallet.SetBalance(GetTetherBalance(OurWallet))
     
-    elif (OurWallet.Currency == 'Tether (BIP20)'):
+    elif (OurWallet.Currency == 'Tether (BEP20)'):
         OurWallet.SetInformation(GetUsdtbnbInformation(OurWallet.Address))
         OurWallet.SetStatus(OurWallet.Information.json()['status'])
         if (OurWallet.Status == '1'):
