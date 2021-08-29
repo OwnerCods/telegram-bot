@@ -80,7 +80,7 @@ def GetEthOrDmtBalance(wallet):
 def GetUsdtbnbBalance(wallet):
     walletBalance = str(wallet.Information.json()['result'])
     if walletBalance != '0':
-        walletBalance = ToCorrectView(walletBalance, 6)
+        walletBalance = ToCorrectView(walletBalance, 18)
     return walletBalance
 
 def GetTetherBalance(wallet):
