@@ -94,7 +94,10 @@ def GetDmtInformation(walletAddress):
     return requests.get(f'https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress={dmtTokenAddress}&address={walletAddress}&tag=latest')
 
 def GetBnbInformation(walletAddress):
-    return requests.get(f'https://api.bscscan.com/api?module=account&action=balancemulti&address=&tag=latest')
+    return requests.get(f'https://api.bscscan.com/api?module=account&action=balancemulti&address={walletAddress}&tag=latest')
+
+def GetBnbtestInformation(walletAddress):
+    return requests.get(f'https://api.testnet.bscscan.com/api?module=account&action=balance&address={walletAddress}&tag=latest')
 
 def GetEthInformation(walletAddress):
     return requests.get(f'https://api.etherscan.io/api?module=account&action=balance&address={walletAddress}&tag=latest')
@@ -124,13 +127,14 @@ def SendWalletBalance(message):
     ethButton = KeyboardButton(text = 'ETH')
     btcButton = KeyboardButton(text = 'BTC')
     bnbButton = KeyboardButton(text = 'BNB')
-    keyboard.add(dmtButton, ethButton, btcButton, bnbButton)
+    bnbtestButton = KeyboardButton(text = 'BNBtest')
+    keyboard.add(dmtButton, ethButton, btcButton, bnbButton, bnbtestButton)
     bot.send_message(message.chat.id, 'Пожалуйста, выберите валюту', reply_markup = keyboard)
     bot.register_next_step_handler(message, SetNameOfCurrency)
 
 def SetNameOfCurrency(message):
     currency = str(message.text)
-    if (currency != 'DMT' and currency != 'ETH' and currency != 'BTC' and currency != 'BNB'):
+    if (currency != 'DMT' and currency != 'ETH' and currency != 'BTC' and currency != 'BNB' and currency != 'BNBtest'):
         bot.send_message(message.chat.id, 'Такой валюты у нас нет', reply_markup = ReplyKeyboardRemove())
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIJcV6Wrw3fxfGMo_gIyRcUnxMpQlocAAI4AANVLHgLguRsLYTyaJYYBA')
     else:
@@ -160,7 +164,13 @@ def SetWalletBalance(message):
         OurWallet.SetStatus(OurWallet.Information.json()['status'])
         if (OurWallet.Status == '1'):
             OurWallet.SetBalance(GetBnbBalance(OurWallet))
-
+     
+    elif (OurWallet.Currency == 'BNBtest'):
+        OurWallet.SetInformation(GetBnbtestInformation(OurWallet.Address))
+        OurWallet.SetStatus(OurWallet.Information.json()['status'])
+        if (OurWallet.Status == '1'):
+            OurWallet.SetBalance(GetBnbtestBalance(OurWallet))
+            
     elif (OurWallet.Currency == 'BTC'):
         OurWallet.SetInformation(GetBtcInformation(OurWallet.Address))
         try:
