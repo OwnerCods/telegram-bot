@@ -77,6 +77,12 @@ def GetEthOrDmtBalance(wallet):
         walletBalance = ToCorrectView(walletBalance, 18)
     return walletBalance
 
+def GetEthOrAirBalance(wallet):
+    walletBalance = str(wallet.Information.json()['result'])
+    if walletBalance != '0':
+        walletBalance = ToCorrectView(walletBalance, 18)
+    return walletBalance
+
 def GetUsdtbnbBalance(wallet):
     walletBalance = str(wallet.Information.json()['result'])
     if walletBalance != '0':
@@ -104,6 +110,10 @@ def GetBtcBalance(wallet):
 def GetDmtInformation(walletAddress):
     dmtTokenAddress = '0xe80eeb5df2478f948427fba1ffd3160bde99e976'
     return requests.get(f'https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress={dmtTokenAddress}&address={walletAddress}&tag=latest')
+
+def GetAirInformation(walletAddress):
+    airTokenAddress = '0xa47d9c7ab5e244dc5b22f88ae860802250d31a75'
+    return requests.get(f'https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress={airTokenAddress}&address={walletAddress}&tag=latest')
 
 def GetUsdtbnbInformation(walletAddress):
     usdbnbTokenAddress = '0x55d398326f99059ff775485246999027b3197955'
@@ -141,6 +151,7 @@ def SendHelp(message):
 def SendWalletBalance(message):
     keyboard = ReplyKeyboardMarkup(resize_keyboard = True, one_time_keyboard = True)
     dmtButton = KeyboardButton(text = 'DMT')
+    airButton = KeyboardButton(text = 'AIR')
     ethButton = KeyboardButton(text = 'ETH')
     btcButton = KeyboardButton(text = 'BTC')
     bnbButton = KeyboardButton(text = 'BNB')
@@ -152,7 +163,7 @@ def SendWalletBalance(message):
 
 def SetNameOfCurrency(message):
     currency = str(message.text)
-    if (currency != 'DMT' and currency != 'ETH' and currency != 'BTC' and currency != 'BNB' and currency != 'Tether (ERC20)' and currency != 'Tether (BEP20)'):
+    if (currency != 'DMT' and currency != 'AIR' and currency != 'ETH' and currency != 'BTC' and currency != 'BNB' and currency != 'Tether (ERC20)' and currency != 'Tether (BEP20)'):
         bot.send_message(message.chat.id, 'Такой валюты у нас нет', reply_markup = ReplyKeyboardRemove())
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIJcV6Wrw3fxfGMo_gIyRcUnxMpQlocAAI4AANVLHgLguRsLYTyaJYYBA')
     else:
@@ -170,6 +181,12 @@ def SetWalletBalance(message):
         OurWallet.SetStatus(OurWallet.Information.json()['status'])
         if (OurWallet.Status == '1'):
             OurWallet.SetBalance(GetEthOrDmtBalance(OurWallet))
+    
+    elif (OurWallet.Currency == 'AIR'):
+        OurWallet.SetInformation(GetAirInformation(OurWallet.Address))
+        OurWallet.SetStatus(OurWallet.Information.json()['status'])
+        if (OurWallet.Status == '1'):
+            OurWallet.SetBalance(GetEthOrAirBalance(OurWallet))        
   
     elif (OurWallet.Currency == 'ETH'):
         OurWallet.SetInformation(GetEthInformation(OurWallet.Address))
