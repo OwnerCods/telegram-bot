@@ -97,7 +97,7 @@ def GetBnbInformation(walletAddress):
     return requests.get(f'https://api.bscscan.com/api?module=account&action=balancemulti&address={walletAddress}&tag=latest')
 
 def GetBnbtestInformation(walletAddress):
-    return requests.get(f'https://api.testnet.bscscan.com/api?module=account&action=balance&address={walletAddress}&tag=latest')
+    return requests.get(f'https://api.testnet.bscscan.com/api?module=account&action=balancemulti&address={walletAddress}&tag=latest')
 
 def GetEthInformation(walletAddress):
     return requests.get(f'https://api.etherscan.io/api?module=account&action=balance&address={walletAddress}&tag=latest')
@@ -128,7 +128,7 @@ def SendWalletBalance(message):
     btcButton = KeyboardButton(text = 'BTC')
     bnbButton = KeyboardButton(text = 'BNB')
     bnbtestButton = KeyboardButton(text = 'BNBtest')
-    keyboard.add(dmtButton, ethButton, btcButton, bnbButton, bnbtestButton)
+    keyboard.add(dmtButton, ethButton, btcButton, bnbButton, bnbtestButton )
     bot.send_message(message.chat.id, 'Пожалуйста, выберите валюту', reply_markup = keyboard)
     bot.register_next_step_handler(message, SetNameOfCurrency)
 
