@@ -157,7 +157,7 @@ def SendWalletBalance(message):
     bnbButton = KeyboardButton(text = 'BNB')
     erc20Button = KeyboardButton(text = 'Tether (ERC20)')
     bep20Button = KeyboardButton(text = 'Tether (BEP20)')
-    keyboard.add(dmtButton, ethButton, btcButton, bnbButton, erc20Button, bep20Button)
+    keyboard.add(dmtButton, ethButton, btcButton, bnbButton, erc20Button, bep20Button, airButton)
     bot.send_message(message.chat.id, 'Пожалуйста, выберите валюту', reply_markup = keyboard)
     bot.register_next_step_handler(message, SetNameOfCurrency)
 
