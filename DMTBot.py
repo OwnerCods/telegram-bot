@@ -80,7 +80,7 @@ def GetEthOrAirBalance(wallet):
 def GetUsdtbnbBalance(wallet):
     walletBalance = str(wallet.Information.json()['result'])
     if walletBalance != '0':
-        walletBalance = ToCorrectView(walletBalance, 18)
+        walletBalance = ToCorrectView(walletBalance, 6)
     return walletBalance
 
 def GetTetherBalance(wallet):
@@ -92,7 +92,7 @@ def GetTetherBalance(wallet):
 def GetUsdtTronBalance(wallet):
     walletBalance = str(wallet.Information.json()['balance'])
     if walletBalance != '0':
-        walletBalance = ToCorrectView(walletBalance, 18)
+        walletBalance = ToCorrectView(walletBalance, 6)
     return walletBalance
 
 def GetBnbBalance(wallet):
@@ -209,8 +209,7 @@ def SetWalletBalance(message):
         OurWallet.SetInformation(GetUsdtTronInformation(OurWallet.Address))
         try:
             if str(OurWallet.Information.json()['error']):
-            if str(OurWallet.Information.json()['trc20token_balances']):
-            if tokenId != "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"       
+            if (tokenId != "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"):   
                 OurWallet.Status = '0'
         except:
             OurWallet.Status = '1'
