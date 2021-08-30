@@ -71,7 +71,7 @@ def ToCorrectView(string, numberOfDecimalPlaces):
         string = string + '0'
     return string
 
-def GetEthOrDmtBalance(wallet):
+def GetAdaBalance(wallet):
     walletBalance = str(wallet.Information.json()['result'])
     if walletBalance != '0':
         walletBalance = ToCorrectView(walletBalance, 18)
@@ -107,9 +107,8 @@ def GetBtcBalance(wallet):
         walletBalance = ToCorrectView(walletBalance, 8)
     return walletBalance
 
-def GetDmtInformation(walletAddress):
-    dmtTokenAddress = '0xe80eeb5df2478f948427fba1ffd3160bde99e976'
-    return requests.get(f'https://api.etherscan.io/api?module=account&action=tokenbalance&contractaddress={dmtTokenAddress}&address={walletAddress}&tag=latest')
+def GetAdaInformation(walletAddress):
+    return requests.get(f'https://explorer.cardano.org/en/no-search-results?query={walletAddress}')
 
 def GetAirInformation(walletAddress):
     airTokenAddress = '0xa47d9c7ab5e244dc5b22f88ae860802250d31a75'
@@ -150,20 +149,20 @@ def SendHelp(message):
 @bot.message_handler(commands = ['getwalletbalance'])
 def SendWalletBalance(message):
     keyboard = ReplyKeyboardMarkup(resize_keyboard = True, one_time_keyboard = True)
-    dmtButton = KeyboardButton(text = 'DMT')
-    airButton = KeyboardButton(text = 'AIR')
-    ethButton = KeyboardButton(text = 'ETH')
-    btcButton = KeyboardButton(text = 'BTC')
-    bnbButton = KeyboardButton(text = 'BNB')
+    adaButton = KeyboardButton(text = 'Cardano(ADA)')
+    airButton = KeyboardButton(text = 'Atmosphere(AIR)')
+    ethButton = KeyboardButton(text = 'Ethereum(ETH)')
+    btcButton = KeyboardButton(text = 'Bitcoin(BTC)')
+    bnbButton = KeyboardButton(text = 'BinanceCoin(BNB)')
     erc20Button = KeyboardButton(text = 'Tether (ERC20)')
     bep20Button = KeyboardButton(text = 'Tether (BEP20)')
-    keyboard.add(ethButton, bnbButton, erc20Button, bep20Button, dmtButton, airButton, btcButton)
+    keyboard.add(ethButton, bnbButton, erc20Button, bep20Button, adaButton, airButton, btcButton)
     bot.send_message(message.chat.id, 'Пожалуйста, выберите валюту', reply_markup = keyboard)
     bot.register_next_step_handler(message, SetNameOfCurrency)
 
 def SetNameOfCurrency(message):
     currency = str(message.text)
-    if (currency != 'DMT' and currency != 'AIR' and currency != 'ETH' and currency != 'BTC' and currency != 'BNB' and currency != 'Tether (ERC20)' and currency != 'Tether (BEP20)'):
+    if (currency != 'Cardano(ADA)' and currency != 'Atmosphere(AIR)' and currency != 'Ethereum(ETH)' and currency != 'Bitcoin(BTC)' and currency != 'BinanceCoin(BNB)' and currency != 'Tether (ERC20)' and currency != 'Tether (BEP20)'):
         bot.send_message(message.chat.id, 'Такой валюты у нас нет', reply_markup = ReplyKeyboardRemove())
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIJcV6Wrw3fxfGMo_gIyRcUnxMpQlocAAI4AANVLHgLguRsLYTyaJYYBA')
     else:
@@ -176,25 +175,19 @@ def SetWalletAddress(message):
     SetWalletBalance(message)
 
 def SetWalletBalance(message):
-    if (OurWallet.Currency == 'DMT'):
-        OurWallet.SetInformation(GetDmtInformation(OurWallet.Address))
-        OurWallet.SetStatus(OurWallet.Information.json()['status'])
-        if (OurWallet.Status == '1'):
-            OurWallet.SetBalance(GetEthOrDmtBalance(OurWallet))
-    
-    elif (OurWallet.Currency == 'AIR'):
+    if (OurWallet.Currency == 'Atmosphere(AIR)'):
         OurWallet.SetInformation(GetAirInformation(OurWallet.Address))
         OurWallet.SetStatus(OurWallet.Information.json()['status'])
         if (OurWallet.Status == '1'):
             OurWallet.SetBalance(GetEthOrAirBalance(OurWallet))        
   
-    elif (OurWallet.Currency == 'ETH'):
+    elif (OurWallet.Currency == 'Ethereum(ETH)'):
         OurWallet.SetInformation(GetEthInformation(OurWallet.Address))
         OurWallet.SetStatus(OurWallet.Information.json()['status'])
         if (OurWallet.Status == '1'):
             OurWallet.SetBalance(GetEthOrDmtBalance(OurWallet))
             
-    elif (OurWallet.Currency == 'BNB'):
+    elif (OurWallet.Currency == 'BinanceCoin(BNB)'):
         OurWallet.SetInformation(GetBnbInformation(OurWallet.Address))
         OurWallet.SetStatus(OurWallet.Information.json()['status'])
         if (OurWallet.Status == '1'):
@@ -211,8 +204,17 @@ def SetWalletBalance(message):
         OurWallet.SetStatus(OurWallet.Information.json()['status'])
         if (OurWallet.Status == '1'):
             OurWallet.SetBalance(GetUsdtbnbBalance(OurWallet))       
-            
-    elif (OurWallet.Currency == 'BTC'):
+    
+    elif (OurWallet.Currency == 'Cardano(ADA)'):
+        OurWallet.SetInformation(GetAdaInformation(OurWallet.Address))
+        try:
+            if str(OurWallet.Information.json()['undex']):
+                OurWallet.Status = '0'
+        except:
+            OurWallet.Status = '1'
+            OurWallet.SetBalance(GetAdaBalance(OurWallet))
+    
+    elif (OurWallet.Currency == 'Bitcoin(BTC)'):
         OurWallet.SetInformation(GetBtcInformation(OurWallet.Address))
         try:
             if str(OurWallet.Information.json()['error']):
