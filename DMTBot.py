@@ -71,12 +71,6 @@ def ToCorrectView(string, numberOfDecimalPlaces):
         string = string + '0'
     return string
 
-def GetAdaBalance(wallet):
-    walletBalance = str(wallet.Information.json()['result'])
-    if walletBalance != '0':
-        walletBalance = ToCorrectView(walletBalance, 18)
-    return walletBalance
-
 def GetEthOrAirBalance(wallet):
     walletBalance = str(wallet.Information.json()['result'])
     if walletBalance != '0':
@@ -106,9 +100,6 @@ def GetBtcBalance(wallet):
     if walletBalance != '0':
         walletBalance = ToCorrectView(walletBalance, 8)
     return walletBalance
-
-def GetAdaInformation(walletAddress):
-    return requests.get(f'https://explorer.cardano.org/en/no-search-results?query={walletAddress}')
 
 def GetAirInformation(walletAddress):
     airTokenAddress = '0xa47d9c7ab5e244dc5b22f88ae860802250d31a75'
@@ -149,20 +140,19 @@ def SendHelp(message):
 @bot.message_handler(commands = ['getwalletbalance'])
 def SendWalletBalance(message):
     keyboard = ReplyKeyboardMarkup(resize_keyboard = True, one_time_keyboard = True)
-    adaButton = KeyboardButton(text = 'Cardano(ADA)')
     airButton = KeyboardButton(text = 'Atmosphere(AIR)')
     ethButton = KeyboardButton(text = 'Ethereum(ETH)')
     btcButton = KeyboardButton(text = 'Bitcoin(BTC)')
     bnbButton = KeyboardButton(text = 'BinanceCoin(BNB)')
     erc20Button = KeyboardButton(text = 'Tether (ERC20)')
     bep20Button = KeyboardButton(text = 'Tether (BEP20)')
-    keyboard.add(ethButton, bnbButton, erc20Button, bep20Button, adaButton, airButton, btcButton)
+    keyboard.add(ethButton, bnbButton, erc20Button, bep20Button, airButton, btcButton)
     bot.send_message(message.chat.id, 'Пожалуйста, выберите валюту', reply_markup = keyboard)
     bot.register_next_step_handler(message, SetNameOfCurrency)
 
 def SetNameOfCurrency(message):
     currency = str(message.text)
-    if (currency != 'Cardano(ADA)' and currency != 'Atmosphere(AIR)' and currency != 'Ethereum(ETH)' and currency != 'Bitcoin(BTC)' and currency != 'BinanceCoin(BNB)' and currency != 'Tether (ERC20)' and currency != 'Tether (BEP20)'):
+    if (currency != 'Atmosphere(AIR)' and currency != 'Ethereum(ETH)' and currency != 'Bitcoin(BTC)' and currency != 'BinanceCoin(BNB)' and currency != 'Tether (ERC20)' and currency != 'Tether (BEP20)'):
         bot.send_message(message.chat.id, 'Такой валюты у нас нет', reply_markup = ReplyKeyboardRemove())
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIJcV6Wrw3fxfGMo_gIyRcUnxMpQlocAAI4AANVLHgLguRsLYTyaJYYBA')
     else:
@@ -204,15 +194,6 @@ def SetWalletBalance(message):
         OurWallet.SetStatus(OurWallet.Information.json()['status'])
         if (OurWallet.Status == '1'):
             OurWallet.SetBalance(GetUsdtbnbBalance(OurWallet))       
-    
-    elif (OurWallet.Currency == 'Cardano(ADA)'):
-        OurWallet.SetInformation(GetAdaInformation(OurWallet.Address))
-        try:
-            if str(OurWallet.Information.json()['undex']):
-                OurWallet.Status = '0'
-        except:
-            OurWallet.Status = '1'
-            OurWallet.SetBalance(GetAdaBalance(OurWallet))
     
     elif (OurWallet.Currency == 'Bitcoin(BTC)'):
         OurWallet.SetInformation(GetBtcInformation(OurWallet.Address))
