@@ -31,9 +31,6 @@ class Wallet:
     def SetStatus(self, status):  
         self.Status = status
         
-     def SetStatuss(self, tokenId):  
-        self.Statuss = tokenId    
-
     def SetCurrency(self, currency):  
         self.Currency = currency
 
@@ -49,9 +46,6 @@ class Wallet:
     def GetStatus(self):  
         return self.Status
     
-    def GetStatuss(self):  
-        return self.Statuss
-
     def GetCurrency(self):  
         return self.Currency
 
@@ -98,6 +92,12 @@ def GetTetherBalance(wallet):
 def GetUsdtTronBalance(wallet):
     walletBalance = str(wallet.Information.json()['balance'])
     if walletBalance != '0':
+        walletBalance = ToCorrectView(walletBalance, 6)
+    return walletBalance
+
+def GetTokenId(wallet):
+    walletBalance = str(wallet.Information.json()['tokenId'])
+    if walletBalance == 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t':
         walletBalance = ToCorrectView(walletBalance, 6)
     return walletBalance
 
@@ -212,12 +212,10 @@ def SetWalletBalance(message):
             OurWallet.SetBalance(GetTetherBalance(OurWallet))
             
     elif (OurWallet.Currency == 'Tether (TRC20)'):
-         OurWallet.SetInformation(GetBtcInformation(OurWallet.Address))
+         OurWallet.SetInformation(GetUsdtTronInformation(OurWallet.Address))
          try:
              if str(OurWallet.Information.json()['error']):   
-              OurWallet.SetStatuss(OurWallet.Information.json()['tokenId'])
-             if (OurWallet.Statuss != 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t'):
-                OurWallet.Status = '0'
+                 OurWallet.Status = '0'
          except:
              OurWallet.Status = '1'
              OurWallet.SetBalance(GetUsdtTronBalance(OurWallet))        
