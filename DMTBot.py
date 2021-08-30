@@ -95,11 +95,6 @@ def GetTronBalance(wallet):
         walletBalance = ToCorrectView(walletBalance, 6)
     return walletBalance
 
-def GetTokenId(wallet):
-    tokenId = str(wallet.Information.json()['tokenId'])
-    if tokenId == 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t':
-    return tokenId
-
 def GetBnbBalance(wallet):
     walletBalance = str(wallet.Information.json()['result'])
     if walletBalance != '0':
