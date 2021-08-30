@@ -208,7 +208,7 @@ def SetWalletBalance(message):
     elif (OurWallet.Currency == 'Tron(TRX)'):
          OurWallet.SetInformation(GetTronInformation(OurWallet.Address))
          try:
-             if str(OurWallet.Information.json()['error']):   
+             if str(OurWallet.Information.json()['message']):   
                  OurWallet.Status = '0'
          except:
              OurWallet.Status = '1'
