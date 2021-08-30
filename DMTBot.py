@@ -135,12 +135,12 @@ def SendWelcome(message):
     if (userLastName == 'None'):
         welcomeMessage = f'Привет, {userFirstName}! Чтобы узнать баланс кошелька, просто отправь:\n /getwalletbalance :)'
     else:
-        welcomeMessage = f'Привет, {userFirstName} {userLastName}! Чтобы узнать баланс кошелька, просто отправь:\n /getwalletbalance :)'
+        welcomeMessage = f'Привет, {userFirstName} {userLastName}! Чтобы узнать баланс кошелька, просто отправь(To find out the wallet balance, simply send):\n /getwalletbalance :)'
     bot.send_message(message.chat.id, welcomeMessage)
 
 @bot.message_handler(commands = ['help'])
 def SendHelp(message):
-    helpMessage = '• /start - Запускает бота\n• /help - Информирует о командах\n• /getwalletbalance - Отправляет баланс кошелька\n\nЕсли есть вопросы, пиши @inDaBots'
+    helpMessage = '• /start - Запускает бота (Launches the bot)\n• /help - Информирует о командах (Informs about the commands)\n• /getwalletbalance - Отправляет баланс кошелька\n\nIf you have any questions, write support @inDaBots'
     bot.send_message(message.chat.id, helpMessage)
 
 @bot.message_handler(commands = ['getwalletbalance'])
@@ -159,11 +159,11 @@ def SendWalletBalance(message):
 def SetNameOfCurrency(message):
     currency = str(message.text)
     if (currency != 'Atmosphere(AIR)' and currency != 'Ethereum(ETH)' and currency != 'Bitcoin(BTC)' and currency != 'BinanceCoin(BNB)' and currency != 'Tether (ERC20)' and currency != 'Tether (BEP20)'):
-        bot.send_message(message.chat.id, 'Такой валюты у нас нет', reply_markup = ReplyKeyboardRemove())
+        bot.send_message(message.chat.id, 'Такой криптовалюты у нас нет (We do not have such a cryptocurrency)', reply_markup = ReplyKeyboardRemove())
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIJcV6Wrw3fxfGMo_gIyRcUnxMpQlocAAI4AANVLHgLguRsLYTyaJYYBA')
     else:
         OurWallet.SetCurrency(currency)
-        bot.send_message(message.chat.id, 'Пожалуйста, отправьте адрес кошелька', reply_markup = ReplyKeyboardRemove())
+        bot.send_message(message.chat.id, 'Пожалуйста, отправьте адрес кошелька (Please send the wallet address)', reply_markup = ReplyKeyboardRemove())
         bot.register_next_step_handler(message, SetWalletAddress)
 
 def SetWalletAddress(message):
@@ -212,23 +212,23 @@ def SetWalletBalance(message):
 
     if OurWallet.Status == '0':
         keyboard = ReplyKeyboardMarkup(resize_keyboard = True, one_time_keyboard = True)
-        yesButton = KeyboardButton(text = 'Да')
-        noButton = KeyboardButton(text = 'Нет')
+        yesButton = KeyboardButton(text = 'Yes')
+        noButton = KeyboardButton(text = 'No')
         keyboard.add(yesButton, noButton)
-        bot.send_message(message.chat.id, 'Данного адреса не существует. Желаете ввести адрес повторно?', reply_markup = keyboard)
+        bot.send_message(message.chat.id, 'Данного адреса не существует. Желаете ввести адрес повторно? (This address does not exist. Would you like to enter the address again?)', reply_markup = keyboard)
         bot.register_next_step_handler(message, SendAddressAgain)
     else:
-        bot.send_message(message.chat.id, f'Баланс кошелька: {OurWallet.Balance} {OurWallet.Currency}')
+        bot.send_message(message.chat.id, f'Balance: {OurWallet.Balance} {OurWallet.Currency}')
 
 def SendAddressAgain(message):
     answer = str(message.text)
-    if (answer == 'Да'):
-        bot.send_message(message.chat.id, 'Отправьте другой адрес кошелька', reply_markup = ReplyKeyboardRemove())
+    if (answer == 'Yes'):
+        bot.send_message(message.chat.id, 'Отправьте другой адрес кошелька (Send another wallet address)', reply_markup = ReplyKeyboardRemove())
         bot.register_next_step_handler(message, SetWalletAddress)
-    elif (answer == 'Нет'):
+    elif (answer == 'No'):
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIJel6Wr_XyYDH4gnCDcfQ8Bqf_6fGpAAJmAANVLHgLgjTQuyJudYYYBA', reply_markup = ReplyKeyboardRemove())
     else:
-        bot.send_message(message.chat.id, 'Данного ответа нет в моем коде', reply_markup = ReplyKeyboardRemove())
+        bot.send_message(message.chat.id, 'What are you talking about, this answer is not in my code', reply_markup = ReplyKeyboardRemove())
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIJcV6Wrw3fxfGMo_gIyRcUnxMpQlocAAI4AANVLHgLguRsLYTyaJYYBA')
 
 bot.polling()
