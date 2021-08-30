@@ -95,6 +95,12 @@ def GetBnbBalance(wallet):
         walletBalance = ToCorrectView(walletBalance, 18)
     return walletBalance
 
+def GetEthBalance(wallet):
+    walletBalance = str(wallet.Information.json()['result'])
+    if walletBalance != '0':
+        walletBalance = ToCorrectView(walletBalance, 18)
+    return walletBalance
+
 def GetBtcBalance(wallet):
     walletBalance = str(wallet.Information.json()[wallet.Address]['final_balance'])
     if walletBalance != '0':
@@ -146,7 +152,7 @@ def SendWalletBalance(message):
     bnbButton = KeyboardButton(text = 'BinanceCoin(BNB)')
     erc20Button = KeyboardButton(text = 'Tether (ERC20)')
     bep20Button = KeyboardButton(text = 'Tether (BEP20)')
-    keyboard.add(ethButton, bnbButton, erc20Button, bep20Button, airButton, btcButton)
+    keyboard.add(btcButton, ethButton, bep20Button, erc20Button, airButton, bnbButton)
     bot.send_message(message.chat.id, 'Пожалуйста, выберите валюту', reply_markup = keyboard)
     bot.register_next_step_handler(message, SetNameOfCurrency)
 
@@ -175,7 +181,7 @@ def SetWalletBalance(message):
         OurWallet.SetInformation(GetEthInformation(OurWallet.Address))
         OurWallet.SetStatus(OurWallet.Information.json()['status'])
         if (OurWallet.Status == '1'):
-            OurWallet.SetBalance(GetEthOrDmtBalance(OurWallet))
+            OurWallet.SetBalance(GetEthBalance(OurWallet))
             
     elif (OurWallet.Currency == 'BinanceCoin(BNB)'):
         OurWallet.SetInformation(GetBnbInformation(OurWallet.Address))
