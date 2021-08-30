@@ -90,9 +90,9 @@ def GetTetherBalance(wallet):
     return walletBalance
 
 def GetUsdtTronBalance(wallet):
-    walletBalance = str(wallet.Information.json()['result'])
+    walletBalance = str(wallet.Information.json()['balance'])
     if walletBalance != '0':
-        walletBalance = ToCorrectView(walletBalance, 6)
+        walletBalance = ToCorrectView(walletBalance, 18)
     return walletBalance
 
 def GetBnbBalance(wallet):
@@ -207,12 +207,13 @@ def SetWalletBalance(message):
             
     elif (OurWallet.Currency == 'Tether (TRC20)'):
         OurWallet.SetInformation(GetUsdtTronInformation(OurWallet.Address))
-        try:
-            if str(OurWallet.Information.json()['message']):
+         try:
+            if str(OurWallet.Information.json()['error']):
                 OurWallet.Status = '0'
         except:
-            if str(OurWallet.Information.json()["tokenId":"TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"]):
-                OurWallet.Status = '1'
+            if str(OurWallet.Information.json()['tokenId']):
+            if tokenId == "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"    
+            OurWallet.Status = '1'
                 OurWallet.SetBalance(GetUsdtTronBalance(OurWallet))        
     
     elif (OurWallet.Currency == 'Tether (BEP20)'):
