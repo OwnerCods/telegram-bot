@@ -215,7 +215,7 @@ def SetWalletBalance(message):
     elif (OurWallet.Currency == 'BTC'):
         OurWallet.SetInformation(GetBtcInformation(OurWallet.Address))
         try:
-            if str(OurWallet.Information.json()['reason']):
+            if str(OurWallet.Information.json()['error']):
                 OurWallet.Status = '0'
         except:
             OurWallet.Status = '1'
