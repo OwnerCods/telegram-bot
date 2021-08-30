@@ -209,7 +209,7 @@ def SetWalletBalance(message):
         OurWallet.SetInformation(GetUsdtTronInformation(OurWallet.Address))
         try:
             if str(OurWallet.Information.json()['error']):
-            if str(OurWallet.Information.json()['tokenId']):
+            str(OurWallet.Information.json()['tokenId']):
             if tokenId != "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"       
                 OurWallet.Status = '0'
         except:
