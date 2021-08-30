@@ -207,11 +207,11 @@ def SetWalletBalance(message):
             
     elif (OurWallet.Currency == 'Tether (TRC20)'):
         OurWallet.SetInformation(GetUsdtTronInformation(OurWallet.Address))
-            if str(OurWallet.Information.json()['error']):
+        if OurWallet.SetStatus(OurWallet.Information.json()['error'])
                 OurWallet.Status = '0'
                 
          OurWallet.SetStatus(OurWallet.Information.json()['tokenId'])
-            if (OurWallet.tokenId == 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t'):
+            if (OurWallet.tokenId == 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t')
             OurWallet.SetBalance(GetUsdtTronBalance(OurWallet))        
     
     elif (OurWallet.Currency == 'Tether (BEP20)'):
