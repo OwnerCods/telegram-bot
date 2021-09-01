@@ -194,7 +194,7 @@ def send_price(message):
         ask_price = btcPrice[1]
         bot.send_message(
             message.chat.id,
-            f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} by Bitfinex\n💚BID Bitcoin price: {bid_price} USD\n❤️ASK Bitcoin price: {ask_price} USD")
+            f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} by Bitfinex\n💚BID Bitcoin price: {bid_price} USD\n❤️ASK Bitcoin price: {ask_price} USD💵")
     except Exception as ex:
         bot.send_message(
             message.chat.id,
@@ -209,7 +209,7 @@ def send_price(message):
         ask_priceEth = ethPrice[1]
         bot.send_message(
             message.chat.id,
-            f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} by Bitfinex\n💚BID Ethereum price: {bid_priceEth} USD\n❤️ASK Ethereum price: {ask_priceEth} USD")
+            f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} by Bitfinex\n💚BID Ethereum price: {bid_priceEth} USD\n❤️ASK Ethereum price: {ask_priceEth} USD💵")
     except Exception as ex:
         bot.send_message(
             message.chat.id,
@@ -237,7 +237,7 @@ def SendWalletBalance(message):
     tonButton = KeyboardButton(text = 'TON(TON💎)')
     airButton = KeyboardButton(text = 'Atmosphere(AIR)')
     ethButton = KeyboardButton(text = 'Ethereum(ETH)')
-    btcButton = KeyboardButton(text = 'Bitcoin(₿TC)')
+    btcButton = KeyboardButton(text = '₿itcoin(BTC)')
     bnbButton = KeyboardButton(text = 'BinanceCoin(BNB)')
     erc20Button = KeyboardButton(text = 'Tether(ERC20)')
     bep20Button = KeyboardButton(text = 'Tether(BEP20)')
@@ -253,7 +253,7 @@ def send_text(message):
 
 def SetNameOfCurrency(message):
     currency = str(message.text)
-    if (currency != 'Atmosphere(AIR)' and currency != 'Tron(TRX)' and currency != 'TON(TON💎)' and currency != 'Ethereum(ETH)' and currency != 'Bitcoin(₿TC)' and currency != 'BinanceCoin(BNB)' and currency != 'Tether(TRC20)' and currency != 'Tether(ERC20)' and currency != 'Tether(BEP20)'):
+    if (currency != 'Atmosphere(AIR)' and currency != 'Tron(TRX)' and currency != 'TON(TON💎)' and currency != 'Ethereum(ETH)' and currency != '₿itcoin(BTC)' and currency != 'BinanceCoin(BNB)' and currency != 'Tether(TRC20)' and currency != 'Tether(ERC20)' and currency != 'Tether(BEP20)'):
         bot.send_message(message.chat.id, 'Такой криптовалюты у нас нет (We do not have such a cryptocurrency)', reply_markup = ReplyKeyboardRemove())
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIJcV6Wrw3fxfGMo_gIyRcUnxMpQlocAAI4AANVLHgLguRsLYTyaJYYBA')
     else:
@@ -322,7 +322,7 @@ def SetWalletBalance(message):
         if (OurWallet.Status == '1'):
             OurWallet.SetBalance(GetUsdtbnbBalance(OurWallet))       
     
-    elif (OurWallet.Currency == 'Bitcoin(₿TC)'):
+    elif (OurWallet.Currency == '₿itcoin(BTC)'):
         OurWallet.SetInformation(GetBtcInformation(OurWallet.Address))
         try:
             if str(OurWallet.Information.json()['error']):
@@ -341,19 +341,19 @@ def SetWalletBalance(message):
     else:
         try:
             
-            if (OurWallet.Currency == "Bitcoin(BTC)"):
+            if (OurWallet.Currency == "₿itcoin(BTC)"):
                 btcPrice = GetBtcPrice()
                 bid_price = btcPrice[0]
                 ask_price = btcPrice[1]
                 priceInUsd = decimal.Decimal(OurWallet.Balance) * decimal.Decimal(ask_price)
-                bot.send_message(message.chat.id, f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} by Bitfinex\n\nBalance wallet: {OurWallet.Balance} {OurWallet.Currency}\nBalance in dollars: {priceInUsd} USD")
+                bot.send_message(message.chat.id, f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} by Bitfinex\n\nBalance wallet: {OurWallet.Balance} {OurWallet.Currency}\nBalance in dollars: {priceInUsd} USD💵")
             
             elif (OurWallet.Currency == "Ethereum(ETH)"):
                 ethPrice = GetEthPrice()
                 bid_priceEth = ethPrice[0]
                 ask_priceEth = ethPrice[1]
                 priceEthInUsd = decimal.Decimal(OurWallet.Balance) * decimal.Decimal(ask_priceEth)
-                bot.send_message(message.chat.id, f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} by Bitfinex\n\nBalance wallet: {OurWallet.Balance} {OurWallet.Currency}\nBalance in dollars: {priceEthInUsd} USD")
+                bot.send_message(message.chat.id, f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} by Bitfinex\n\nBalance wallet: {OurWallet.Balance} {OurWallet.Currency}\nBalance in dollars: {priceEthInUsd} USD💵")
             else:
                 bot.send_message(message.chat.id, f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\nBalance wallet: {OurWallet.Balance} {OurWallet.Currency}")
         except Exception as ex:
