@@ -234,7 +234,7 @@ def SendHelp(message):
 @bot.message_handler(commands = ['getwalletbalance'])
 def SendWalletBalance(message):
     keyboard = ReplyKeyboardMarkup(resize_keyboard = True, one_time_keyboard = True)
-    tonButton = KeyboardButton(text = 'TON(TON)')
+    tonButton = KeyboardButton(text = '💎TON(TON)')
     airButton = KeyboardButton(text = 'Atmosphere(AIR)')
     ethButton = KeyboardButton(text = 'Ethereum(ETH)')
     btcButton = KeyboardButton(text = 'Bitcoin(BTC)')
