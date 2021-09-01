@@ -151,7 +151,7 @@ def SendWelcome(message):
     userFirstName = str(message.from_user.first_name)
     userLastName = str(message.from_user.last_name)
     if (userLastName == 'None'):
-        welcomeMessage = f'Привет, {userFirstName}! Чтобы узнать баланс кошелька, просто отправь:\n /getwalletbalance :)'
+        welcomeMessage = f'Привет, {userFirstName}! Чтобы узнать баланс кошелька, просто отправь:\n /getwalletbalance 💰'
     else:
         welcomeMessage = f'Привет, {userFirstName} {userLastName}! Чтобы узнать баланс кошелька, просто отправь(To find out the wallet balance, simply send):\n /getwalletbalance :)'
     bot.send_message(message.chat.id, welcomeMessage)
@@ -226,8 +226,8 @@ def SetWalletBalance(message):
             
     elif (OurWallet.Currency == 'Ton(TON)'):
          OurWallet.SetInformation(GetTonInformation(OurWallet.Address))
-         OurWallet.SetStatus(OurWallet.Information.json()['ok'])
-         if (OurWallet.Status == 'true'):   
+         OurWallet.SetStatus(OurWallet.Information.json()['ok']['true'])
+         if (OurWallet.Status == '1'):   
              OurWallet.SetBalance(GetTonBalance(OurWallet))           
     
     elif (OurWallet.Currency == 'Tether(BEP20)'):
