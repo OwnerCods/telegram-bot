@@ -184,7 +184,7 @@ def GetEthPrice():
 
 @bot.message_handler(commands=["start"])
 def start_message(message):
-    bot.send_message(message.chat.id, "Hello friend! Write the '/btcprice' '/ethprice' to find out the cost of Bitcoin and Ethereum!")
+    bot.send_message(message.chat.id, "Hello friend! Write the ₿'/btcprice' '/ethprice' to find out the cost of Bitcoin and Ethereum!")
 
 @bot.message_handler(commands=["btcprice"])
 def send_price(message):
@@ -237,7 +237,7 @@ def SendWalletBalance(message):
     tonButton = KeyboardButton(text = 'TON(TON💎)')
     airButton = KeyboardButton(text = 'Atmosphere(AIR)')
     ethButton = KeyboardButton(text = 'Ethereum(ETH)')
-    btcButton = KeyboardButton(text = 'Bitcoin(BTC)')
+    btcButton = KeyboardButton(text = 'Bitcoin(₿TC)')
     bnbButton = KeyboardButton(text = 'BinanceCoin(BNB)')
     erc20Button = KeyboardButton(text = 'Tether(ERC20)')
     bep20Button = KeyboardButton(text = 'Tether(BEP20)')
@@ -253,7 +253,7 @@ def send_text(message):
 
 def SetNameOfCurrency(message):
     currency = str(message.text)
-    if (currency != 'Atmosphere(AIR)' and currency != 'Tron(TRX)' and currency != 'TON(TON💎)' and currency != 'Ethereum(ETH)' and currency != 'Bitcoin(BTC)' and currency != 'BinanceCoin(BNB)' and currency != 'Tether(TRC20)' and currency != 'Tether(ERC20)' and currency != 'Tether(BEP20)'):
+    if (currency != 'Atmosphere(AIR)' and currency != 'Tron(TRX)' and currency != 'TON(TON💎)' and currency != 'Ethereum(ETH)' and currency != 'Bitcoin(₿TC)' and currency != 'BinanceCoin(BNB)' and currency != 'Tether(TRC20)' and currency != 'Tether(ERC20)' and currency != 'Tether(BEP20)'):
         bot.send_message(message.chat.id, 'Такой криптовалюты у нас нет (We do not have such a cryptocurrency)', reply_markup = ReplyKeyboardRemove())
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIJcV6Wrw3fxfGMo_gIyRcUnxMpQlocAAI4AANVLHgLguRsLYTyaJYYBA')
     else:
@@ -322,7 +322,7 @@ def SetWalletBalance(message):
         if (OurWallet.Status == '1'):
             OurWallet.SetBalance(GetUsdtbnbBalance(OurWallet))       
     
-    elif (OurWallet.Currency == 'Bitcoin(BTC)'):
+    elif (OurWallet.Currency == 'Bitcoin(₿TC)'):
         OurWallet.SetInformation(GetBtcInformation(OurWallet.Address))
         try:
             if str(OurWallet.Information.json()['error']):
