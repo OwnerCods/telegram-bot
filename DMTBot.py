@@ -228,7 +228,7 @@ def SetWalletBalance(message):
          OurWallet.SetInformation(GetTonInformation(OurWallet.Address))
          try:
              if str(OurWallet.Information.json()['ok']['false']): 
-             OurWallet.Status = '0'
+                 OurWallet.Status = '0'
          except:
              OurWallet.Status = '1'
              OurWallet.SetBalance(GetTonBalance(OurWallet))           
