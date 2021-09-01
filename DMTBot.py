@@ -31,7 +31,7 @@ class Wallet:
     def SetStatus(self, status):  
         self.Status = status
         
-     def SetStatuss(self, ok):  
+    def SetStatuss(self, ok):  
         self.Statuss = ok    
         
     def SetCurrency(self, currency):  
