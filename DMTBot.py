@@ -227,7 +227,7 @@ def SetWalletBalance(message):
     elif (OurWallet.Currency == 'Ton(TON)'):
          OurWallet.SetInformation(GetTonInformation(OurWallet.Address))
          OurWallet.SetStatus(OurWallet.Information.json()['ok'])
-         if str(OurWallet.Status == 'true'): 
+         if bool(OurWallet.Status == 'true'): 
              OurWallet.Status = '1'   
              OurWallet.SetBalance(GetTonBalance(OurWallet))           
     
