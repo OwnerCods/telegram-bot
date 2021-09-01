@@ -209,7 +209,7 @@ def send_price(message):
         ask_priceEth = ethPrice[1]
         bot.send_message(
             message.chat.id,
-            f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} by Bitfinex\n💚BID Ethereum price: {bid_priceEth} USD\n❤️ASK Ethereum price: {ask_priceEth} USD")
+            f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} by Bitfinex💎\n💚BID Ethereum price: {bid_priceEth} USD\n❤️ASK Ethereum price: {ask_priceEth} USD")
     except Exception as ex:
         bot.send_message(
             message.chat.id,
@@ -234,7 +234,7 @@ def SendHelp(message):
 @bot.message_handler(commands = ['getwalletbalance'])
 def SendWalletBalance(message):
     keyboard = ReplyKeyboardMarkup(resize_keyboard = True, one_time_keyboard = True)
-    tonButton = KeyboardButton(text = '💎TON(TON)')
+    tonButton = KeyboardButton(text = 'TON(TON💎)')
     airButton = KeyboardButton(text = 'Atmosphere(AIR)')
     ethButton = KeyboardButton(text = 'Ethereum(ETH)')
     btcButton = KeyboardButton(text = 'Bitcoin(BTC)')
