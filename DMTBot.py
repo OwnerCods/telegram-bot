@@ -99,7 +99,7 @@ def GetTronBalance(wallet):
     return walletBalance
 
 def GetTonBalance(wallet):
-    walletBalance = str(wallet.Information.json()['balance'])
+    walletBalance = str(wallet.Information.json()['result']['balance'])
     if walletBalance != '0':
         walletBalance = ToCorrectView(walletBalance, 9)
     return walletBalance
