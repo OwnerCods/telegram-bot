@@ -95,6 +95,12 @@ def GetTronBalance(wallet):
         walletBalance = ToCorrectView(walletBalance, 6)
     return walletBalance
 
+def GetTonBalance(wallet):
+    walletBalance = str(wallet.Information.json()['result'])
+    if walletBalance != '0':
+        walletBalance = ToCorrectView(walletBalance, 18)
+    return walletBalance
+
 def GetBnbBalance(wallet):
     walletBalance = str(wallet.Information.json()['result'])
     if walletBalance != '0':
@@ -123,6 +129,9 @@ def GetUsdtbnbInformation(walletAddress):
 
 def GetTronInformation(walletAddress):
      return requests.get(f'https://apilist.tronscan.org/api/account?address={walletAddress}')
+    
+def GetTonInformation(walletAddress):
+     return requests.get(f'https://api.ton.sh/getAddressInformation?address={walletAddress}')   
     
 def GetBnbInformation(walletAddress):
     return requests.get(f'https://api.bscscan.com/api?module=account&action=balance&address={walletAddress}&tag=latest')
@@ -156,19 +165,20 @@ def SendHelp(message):
 def SendWalletBalance(message):
     keyboard = ReplyKeyboardMarkup(resize_keyboard = True, one_time_keyboard = True)
     airButton = KeyboardButton(text = 'Atmosphere(AIR)')
+    tonButton = KeyboardButton(text = 'Ton(TON)')
     ethButton = KeyboardButton(text = 'Ethereum(ETH)')
     btcButton = KeyboardButton(text = 'Bitcoin(BTC)')
     bnbButton = KeyboardButton(text = 'BinanceCoin(BNB)')
     erc20Button = KeyboardButton(text = 'Tether(ERC20)')
     bep20Button = KeyboardButton(text = 'Tether(BEP20)')
     tronButton = KeyboardButton(text = 'Tron(TRX)')
-    keyboard.add(btcButton, ethButton, bep20Button, erc20Button, airButton, tronButton, bnbButton)
+    keyboard.add(btcButton, ethButton, bep20Button, erc20Button, airButton, tronButton, tonButton, bnbButton)
     bot.send_message(message.chat.id, 'Пожалуйста, выберите валюту', reply_markup = keyboard)
     bot.register_next_step_handler(message, SetNameOfCurrency)
 
 def SetNameOfCurrency(message):
     currency = str(message.text)
-    if (currency != 'Atmosphere(AIR)' and currency != 'Ethereum(ETH)' and currency != 'Bitcoin(BTC)' and currency != 'BinanceCoin(BNB)' and currency != 'Tron(TRX)' and currency != 'Tether(ERC20)' and currency != 'Tether(BEP20)'):
+    if (currency != 'Atmosphere(AIR)'and currency != 'Ton(TON)' and currency != 'Ethereum(ETH)' and currency != 'Bitcoin(BTC)' and currency != 'BinanceCoin(BNB)' and currency != 'Tron(TRX)' and currency != 'Tether(ERC20)' and currency != 'Tether(BEP20)'):
         bot.send_message(message.chat.id, 'Такой криптовалюты у нас нет (We do not have such a cryptocurrency)', reply_markup = ReplyKeyboardRemove())
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIJcV6Wrw3fxfGMo_gIyRcUnxMpQlocAAI4AANVLHgLguRsLYTyaJYYBA')
     else:
@@ -212,7 +222,16 @@ def SetWalletBalance(message):
                  OurWallet.Status = '0'
          except:
              OurWallet.Status = '1'
-             OurWallet.SetBalance(GetTronBalance(OurWallet))        
+             OurWallet.SetBalance(GetTronBalance(OurWallet))  
+            
+    elif (OurWallet.Currency == 'Ton(TON)'):
+         OurWallet.SetInformation(GetTonInformation(OurWallet.Address))
+         try:
+             if str(OurWallet.Information.json()['false']):   
+                 OurWallet.Status = '0'
+         except:
+             OurWallet.Status = '1'
+             OurWallet.SetBalance(GetTonBalance(OurWallet))           
     
     elif (OurWallet.Currency == 'Tether(BEP20)'):
         OurWallet.SetInformation(GetUsdtbnbInformation(OurWallet.Address))
