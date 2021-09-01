@@ -31,6 +31,9 @@ class Wallet:
     def SetStatus(self, status):  
         self.Status = status
         
+     def SetStatuss(self, ok):  
+        self.Statuss = ok    
+        
     def SetCurrency(self, currency):  
         self.Currency = currency
 
@@ -226,8 +229,8 @@ def SetWalletBalance(message):
             
     elif (OurWallet.Currency == 'Ton(TON)'):
          OurWallet.SetInformation(GetTonInformation(OurWallet.Address))
-         OurWallet.SetStatus(OurWallet.Information.json()['ok'])
-         if (OurWallet.ok == 'false'):   
+         OurWallet.SetStatuss(OurWallet.Information.json()['ok'])
+         if (OurWallet.Statuss == 'false'):   
                  OurWallet.Status = '0'
          else:
              OurWallet.Status = '1'
