@@ -253,7 +253,7 @@ def send_text(message):
 
 def SetNameOfCurrency(message):
     currency = str(message.text)
-    if (currency != 'Atmosphere(AIR)' and currency != 'Tron(TRX)' and currency != 'TON(TON)' and currency != 'Ethereum(ETH)' and currency != 'Bitcoin(BTC)' and currency != 'BinanceCoin(BNB)' and currency != 'Tether(TRC20)' and currency != 'Tether(ERC20)' and currency != 'Tether(BEP20)'):
+    if (currency != 'Atmosphere(AIR)' and currency != 'Tron(TRX)' and currency != 'TON(TON💎)' and currency != 'Ethereum(ETH)' and currency != 'Bitcoin(BTC)' and currency != 'BinanceCoin(BNB)' and currency != 'Tether(TRC20)' and currency != 'Tether(ERC20)' and currency != 'Tether(BEP20)'):
         bot.send_message(message.chat.id, 'Такой криптовалюты у нас нет (We do not have such a cryptocurrency)', reply_markup = ReplyKeyboardRemove())
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIJcV6Wrw3fxfGMo_gIyRcUnxMpQlocAAI4AANVLHgLguRsLYTyaJYYBA')
     else:
@@ -290,7 +290,7 @@ def SetWalletBalance(message):
         if (OurWallet.Status == '1'):
             OurWallet.SetBalance(GetTetherBalance(OurWallet))
             
-    elif (OurWallet.Currency == 'TON(TON)'):
+    elif (OurWallet.Currency == 'TON(TON💎)'):
          OurWallet.SetInformation(GetTonInformation(OurWallet.Address))
          if not OurWallet.Information.json()['ok']:
              OurWallet.Status = '0'
