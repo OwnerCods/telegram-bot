@@ -6,8 +6,6 @@ import decimal
 from telebot.types import Message, ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton
 
 token = os.environ['TOKEN']
-
-#def telegram_bot(token):
 bot = telebot.TeleBot(token)
     
 class Wallet:  
