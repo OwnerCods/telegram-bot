@@ -153,7 +153,7 @@ def SendWelcome(message):
     if (userLastName == 'None'):
         welcomeMessage = f'Привет, {userFirstName}! Чтобы узнать баланс кошелька, просто отправь:\n /getwalletbalance 💰'
     else:
-        welcomeMessage = f'Привет, {userFirstName} {userLastName}! Чтобы узнать баланс кошелька, просто отправь(To find out the wallet balance, simply send):\n /getwalletbalance :)'
+        welcomeMessage = f'Привет, {userFirstName} {userLastName}! Чтобы узнать баланс кошелька, просто отправь(To find out the wallet balance, simply send):\n /getwalletbalance 💰'
     bot.send_message(message.chat.id, welcomeMessage)
 
 @bot.message_handler(commands = ['help'])
@@ -226,8 +226,8 @@ def SetWalletBalance(message):
             
     elif (OurWallet.Currency == 'Ton(TON)'):
          OurWallet.SetInformation(GetTonInformation(OurWallet.Address))
-         OurWallet.SetStatus(OurWallet.Information.json()['bool'])
-         if (OurWallet.Status == 'true'): 
+         OurWallet.SetStatus(OurWallet.Information.json()['ok'])
+         if bool(OurWallet.Status == 'true'): 
              OurWallet.Status = '1'   
              OurWallet.SetBalance(GetTonBalance(OurWallet))           
     
