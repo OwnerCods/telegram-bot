@@ -30,10 +30,7 @@ class Wallet:
 
     def SetStatus(self, status):  
         self.Status = status
-        
-    def SetStatuss(self, ok):  
-        self.Statuss = ok    
-        
+                
     def SetCurrency(self, currency):  
         self.Currency = currency
 
@@ -99,7 +96,7 @@ def GetTronBalance(wallet):
     return walletBalance
 
 def GetTonBalance(wallet):
-    walletBalance = str(wallet.Information.json()['result']['balance'])
+    walletBalance = str(wallet.Information.json()['balance'])
     if walletBalance != '0':
         walletBalance = ToCorrectView(walletBalance, 9)
     return walletBalance
@@ -229,8 +226,8 @@ def SetWalletBalance(message):
             
     elif (OurWallet.Currency == 'Ton(TON)'):
          OurWallet.SetInformation(GetTonInformation(OurWallet.Address))
-         OurWallet.SetStatuss(OurWallet.Information.json()['ok'])
-         if (OurWallet.ok == 'false'):   
+         OurWallet.SetStatus(OurWallet.Information.json()['ok'])
+         if (OurWallet.Status = 'false'):   
                  OurWallet.Status = '0'
          else:
              OurWallet.Status = '1'
