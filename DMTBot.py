@@ -178,7 +178,17 @@ def GetEthPrice():
         ask_priceEth = response[2]
         return [bid_priceEth, ask_priceEth]
     except Exception:
-        raise Exception("Damn...Something was wrong...")       
+        raise Exception("Damn...Something was wrong...") 
+        
+ def GetTronPrice():
+    try:
+        req = requests.get("https://api-pub.bitfinex.com/v2/ticker/tTRXUSD")
+        response = req.json()
+        bid_priceTrx = response[0]
+        ask_priceTrx = response[2]
+        return [bid_priceTrx, ask_priceTrx]
+    except Exception:
+        raise Exception("Damn...Something was wrong...")        
 
 @bot.message_handler(commands=["start"])
 def start_message(message):
@@ -213,6 +223,21 @@ def send_price(message):
             message.chat.id,
             ex
         )
+        
+  @bot.message_handler(commands=["trxprice"])
+def send_price(message):
+    try:
+        trxPrice = GetTrxPrice()
+        bid_priceTrx = trxPrice[0]
+        ask_priceTrx = trxPrice[1]
+        bot.send_message(
+            message.chat.id,
+            f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} by Bitfinex\n💚BID Tron price: {bid_priceTrx} USD💵\n❤️ASK Tron price: {ask_priceTrx} USD💵")
+    except Exception as ex:
+        bot.send_message(
+            message.chat.id,
+            ex
+        )      
 
 @bot.message_handler(commands = ['coinmenu'])
 def SendWelcome(message):
@@ -226,7 +251,7 @@ def SendWelcome(message):
 
 @bot.message_handler(commands = ['help'])
 def SendHelp(message):
-    helpMessage = '• /start - Запускает бота (Launches the bot)\n• /help - Информирует о командах (Informs about the commands)\n•/ethprice - Ethereum price by BITFINEX\n•/btcprice - Bitcoin price by BITFINEX\n• /coinmenu - displays the following command\n• /getwalletbalance - показывает баланс кошелька\n\nIf you have any questions, write support @inDaBots'
+    helpMessage = '• /start - Запускает бота (Launches the bot)\n• /help - Информирует о командах (Informs about the commands)\n•/trxprice - Tron price by BITFINEX\n•/ethprice - Ethereum price by BITFINEX\n•/btcprice - Bitcoin price by BITFINEX\n• /coinmenu - displays the following command\n• /getwalletbalance - показывает баланс кошелька\n\nIf you have any questions, write support @inDaBots'
     bot.send_message(message.chat.id, helpMessage)
 
 @bot.message_handler(commands = ['getwalletbalance'])
@@ -345,6 +370,13 @@ def SetWalletBalance(message):
                 ask_price = btcPrice[1]
                 priceInUsd = decimal.Decimal(OurWallet.Balance) * decimal.Decimal(ask_price)
                 bot.send_message(message.chat.id, f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} by Bitfinex\n\nBalance wallet: {OurWallet.Balance} {OurWallet.Currency}\nBalance in dollars: {priceInUsd} USD💵")
+            
+            elif (OurWallet.Currency == "Tron(TRX)"):
+                trxPrice = GetTrxPrice()
+                bid_priceTrx = trxPrice[0]
+                ask_priceTrx = trxPrice[1]
+                priceTrxInUsd = decimal.Decimal(OurWallet.Balance) * decimal.Decimal(ask_priceTrx)
+                bot.send_message(message.chat.id, f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} by Bitfinex\n\nBalance wallet: {OurWallet.Balance} {OurWallet.Currency}\nBalance in dollars: {priceTrxInUsd} USD💵")
             
             elif (OurWallet.Currency == "Ethereum(ETH)"):
                 ethPrice = GetEthPrice()
