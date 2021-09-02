@@ -181,14 +181,14 @@ def GetEthPrice():
         raise Exception("Damn...Something was wrong...") 
         
  def GetTronPrice():
-    try:
-        req = requests.get("https://api-pub.bitfinex.com/v2/ticker/tTRXUSD")
-        response = req.json()
-        bid_priceTrx = response[0]
-        ask_priceTrx = response[2]
-        return [bid_priceTrx, ask_priceTrx]
-    except Exception:
-        raise Exception("Damn...Something was wrong...")        
+     try:
+         req = requests.get("https://api-pub.bitfinex.com/v2/ticker/tTRXUSD")
+         response = req.json()
+         bid_priceTrx = response[0]
+         ask_priceTrx = response[2]
+         return [bid_priceTrx, ask_priceTrx]
+     except Exception:
+         raise Exception("Damn...Something was wrong...")        
 
 @bot.message_handler(commands=["start"])
 def start_message(message):
