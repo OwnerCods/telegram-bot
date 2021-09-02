@@ -237,8 +237,8 @@ def send_price(message):
          bot.send_message(
              message.chat.id,
              ex
-         )      
-
+         ) 
+            
 @bot.message_handler(commands = ['coinmenu'])
 def SendWelcome(message):
     userFirstName = str(message.from_user.first_name)
