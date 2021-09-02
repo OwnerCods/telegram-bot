@@ -227,7 +227,7 @@ def send_price(message):
  @bot.message_handler(commands=["trxprice"])
  def send_price(message):
      try:
-         trxPrice = GetTrxPrice()
+         trxPrice = GetTronPrice()
          bid_priceTrx = trxPrice[0]
          ask_priceTrx = trxPrice[1]
          bot.send_message(
