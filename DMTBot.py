@@ -192,7 +192,7 @@ def GetEthPrice():
 
 @bot.message_handler(commands=["start"])
 def start_message(message):
-    bot.send_message(message.chat.id, "Hello friend! Write the ₿'/btcprice' '/ethprice' to find out the cost of Bitcoin and Ethereum!")
+    bot.send_message(message.chat.id, "Hello friend! Write the ₿'/btcprice' '/ethprice' '/trxprice' to find out the cost of Bitcoin, Ethereum, Tron!")
 
 @bot.message_handler(commands=["btcprice"])
 def send_price(message):
@@ -224,20 +224,20 @@ def send_price(message):
             ex
         )
         
-  @bot.message_handler(commands=["trxprice"])
-def send_price(message):
-    try:
-        trxPrice = GetTrxPrice()
-        bid_priceTrx = trxPrice[0]
-        ask_priceTrx = trxPrice[1]
-        bot.send_message(
-            message.chat.id,
-            f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} by Bitfinex\n💚BID Tron price: {bid_priceTrx} USD💵\n❤️ASK Tron price: {ask_priceTrx} USD💵")
-    except Exception as ex:
-        bot.send_message(
-            message.chat.id,
-            ex
-        )      
+ @bot.message_handler(commands=["trxprice"])
+ def send_price(message):
+     try:
+         trxPrice = GetTrxPrice()
+         bid_priceTrx = trxPrice[0]
+         ask_priceTrx = trxPrice[1]
+         bot.send_message(
+             message.chat.id,
+             f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} by Bitfinex\n💚BID Tron price: {bid_priceTrx} USD💵\n❤️ASK Tron price: {ask_priceTrx} USD💵")
+     except Exception as ex:
+         bot.send_message(
+             message.chat.id,
+             ex
+         )      
 
 @bot.message_handler(commands = ['coinmenu'])
 def SendWelcome(message):
