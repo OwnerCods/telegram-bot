@@ -223,7 +223,7 @@ def send_price(message):
             message.chat.id,
             ex
         )
-        
+ 
  @bot.message_handler(commands=["trxprice"])
  def send_price(message):
      try:
@@ -372,7 +372,7 @@ def SetWalletBalance(message):
                 bot.send_message(message.chat.id, f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} by Bitfinex\n\nBalance wallet: {OurWallet.Balance} {OurWallet.Currency}\nBalance in dollars: {priceInUsd} USD💵")
             
             elif (OurWallet.Currency == "Tron(TRX)"):
-                trxPrice = GetTrxPrice()
+                trxPrice = GetTronPrice()
                 bid_priceTrx = trxPrice[0]
                 ask_priceTrx = trxPrice[1]
                 priceTrxInUsd = decimal.Decimal(OurWallet.Balance) * decimal.Decimal(ask_priceTrx)
