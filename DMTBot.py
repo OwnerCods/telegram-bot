@@ -190,10 +190,6 @@ def GetTronPrice():
     except Exception:
         raise Exception("Damn...Something was wrong...")       
 
-@bot.message_handler(commands=["start"])
-def start_message(message):
-    bot.send_message(message.chat.id, "Hello friend! Write the ₿'/btcprice' '/ethprice' '/trxprice' to find out the cost of Bitcoin, Ethereum, Tron!")
-
 @bot.message_handler(commands=["btcprice"])
 def send_price(message):
     try:
@@ -239,19 +235,19 @@ def send_price(message):
             ex
         )
              
-@bot.message_handler(commands = ['coinmenu'])
+@bot.message_handler(commands = ['start'])
 def SendWelcome(message):
     userFirstName = str(message.from_user.first_name)
     userLastName = str(message.from_user.last_name)
     if (userLastName == 'None'):
-        welcomeMessage = f'Привет, {userFirstName}! Чтобы узнать баланс кошелька, просто отправь(To find out the wallet balance, just send):\n /getwalletbalance :)'
+        welcomeMessage = f"Привет, {userFirstName}! Чтобы узнать баланс кошелька, просто отправь(To find out the wallet balance, just send):\n /getwalletbalance Смотреть курсы валют ₿itcoin-'/btcprice' Ethereum-'/ethprice' Tron'/trxprice'  by Bitfinex."
     else:
-        welcomeMessage = f'Привет, {userFirstName} {userLastName}! Чтобы узнать баланс кошелька, просто отправь(To find out the wallet balance, simply send):\n /getwalletbalance :)'
+        welcomeMessage = f"Привет, {userFirstName} {userLastName}! Чтобы узнать баланс кошелька, просто отправь(To find out the wallet balance, simply send):\n /getwalletbalance Смотреть курсы валют ₿itcoin-'/btcprice' Ethereum-'/ethprice' Tron'/trxprice' by Bitfinex"
     bot.send_message(message.chat.id, welcomeMessage)
 
 @bot.message_handler(commands = ['help'])
 def SendHelp(message):
-    helpMessage = '• /start - Запускает бота (Launches the bot)\n• /help - Информирует о командах (Informs about the commands)\n•/trxprice - Tron price by BITFINEX\n•/ethprice - Ethereum price by BITFINEX\n•/btcprice - Bitcoin price by BITFINEX\n• /coinmenu - displays the following command\n• /getwalletbalance - показывает баланс кошелька\n\nIf you have any questions, write support @inDaBots'
+    helpMessage = '• /start - Запускает бота (Launches the bot)\n• /help - Информирует о командах (Informs about the commands)\n•/trxprice - Tron price by BITFINEX\n•/ethprice - Ethereum price by BITFINEX\n•/btcprice - Bitcoin price by BITFINEX\n• /getwalletbalance - показывает баланс кошелька\n\nIf you have any questions, write support @inDaBots'
     bot.send_message(message.chat.id, helpMessage)
 
 @bot.message_handler(commands = ['getwalletbalance'])
