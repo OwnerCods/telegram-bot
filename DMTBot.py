@@ -240,9 +240,9 @@ def SendWelcome(message):
     userFirstName = str(message.from_user.first_name)
     userLastName = str(message.from_user.last_name)
     if (userLastName == 'None'):
-        welcomeMessage = f"Привет, {userFirstName}! Чтобы узнать баланс кошелька, просто отправь(To find out the wallet balance, just send):\n /getwalletbalance Смотреть курсы валют ₿itcoin-'/btcprice' Ethereum-'/ethprice' Tron'/trxprice'  by Bitfinex."
+        welcomeMessage = f"Привет, {userFirstName}!\n Чтобы узнать баланс кошелька, просто отправь:\n /getwalletbalance Смотреть курсы валют к доллару: ₿itcoin-'/btcprice' Ethereum-'/ethprice' Tron'/trxprice'  by Bitfinex."
     else:
-        welcomeMessage = f"Привет, {userFirstName} {userLastName}! Чтобы узнать баланс кошелька, просто отправь(To find out the wallet balance, simply send):\n /getwalletbalance Смотреть курсы валют ₿itcoin-'/btcprice' Ethereum-'/ethprice' Tron'/trxprice' by Bitfinex"
+        welcomeMessage = f"Привет, {userFirstName} {userLastName}!\n Чтобы узнать баланс кошелька, просто отправь:\n /getwalletbalance Смотреть курсы валютк долару: ₿itcoin-'/btcprice' Ethereum-'/ethprice' Tron'/trxprice' by Bitfinex"
     bot.send_message(message.chat.id, welcomeMessage)
 
 @bot.message_handler(commands = ['help'])
